@@ -1,100 +1,117 @@
-/* 1. Use a more-intuitive box-sizing model */
-*, *::before, *::after {
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-/* 2. Remove default margin */
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: sans-serif;
-    font-size: 10px;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: sans-serif;
+  font-size: 10px;
 }
 
 
-/* 3. Enable keyword animations */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    interpolate-size: allow-keywords;
-  }
-}
 
 body {
-  /* 4. Add accessible line-height */
+  
   line-height: 1.5;
-  /* 5. Improve text rendering */
+  
   -webkit-font-smoothing: antialiased;
 }
 
-/* 6. Improve media defaults */
-img, picture, video, canvas, svg {
+
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
-/* 7. Inherit fonts for form controls */
-input, button, textarea, select {
+
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
-/* 8. Avoid text overflows */
-p, h1, h2, h3, h4, h5, h6 {
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
 
-/* 9. Improve line wrapping */
+
 p {
   text-wrap: pretty;
 }
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-wrap: balance;
 }
 
-/*
-  10. Create a root stacking context
-*/
 
-.gridContainer{
-    display: grid;
-    grid-template-columns: 25rem 1fr;
-    height: 100vh;
-    transition: grid-template-columns 0.3s ease;
 
+.gridContainer {
+  display: grid;
+  grid-template-columns: 25rem 1fr;
+  height: 100vh;
+  transition: grid-template-columns 0.3s ease;
 }
 
 .sidebar {
+  background-color: #fcfaf8;
+  padding: 1rem;
+  transition: background-color 0.3s ease;
+  overflow: hidden;
+  min-width: 0;
+  height: 100%;
+  overflow-y: auto;
+}
 
-    background-color: #FCFAF8;
-    padding: 1rem;
-    transition: background-color 0.3s ease;
-    overflow: hidden;
-
-} 
-
-.topBar{
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    align-items: center;
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
 }
 
 .profileDiv img {
-    height: 20%;
-    width: 20%;
-    cursor: pointer;
+  
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .menuIcon {
-    color: #562626d9;
-    cursor: pointer;
-    font-size: 2rem;
-    transform: rotate(-90deg);
+  color: #562626d9;
+  cursor: pointer;
+  font-size: 2rem;
+  transform: rotate(-90deg);
 }
 
 .mainContent {
   background-color: #fff;
   padding: 2rem;
+  height: calc(100vh - 100px); 
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* grid collapsed state */
@@ -105,6 +122,525 @@ h1, h2, h3, h4, h5, h6 {
 
 .gridContainer.collapsed .sidebar {
   background-color: #fff;
+  overflow-y: hidden;
+}
+
+.gridContainer.collapsed .navContent,
+.gridContainer.collapsed .myProjects,
+.gridContainer.collapsed .projectView {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.navContent {
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+}
+
+.navItem {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  width: 100%;
+  padding: 0.8rem 0.6rem;
+}
+
+.navItem:hover:not(.active),
+.myProjects:hover {
+  background-color: #c1c1c1;
+  border-radius: 0.4rem;
+}
+
+.active {
+  background-color: #ffefe5;
+  border-radius: 0.4rem;
+}
+
+.addTaskIcon,
+.inboxIcon {
+  font-size: 2.6rem;
+  color: #dc4c3e;
+}
+
+.todayIcon,
+.completeIcon {
+  font-size: 2.6rem;
+  color: #666;
+}
+
+.addTaskText {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #a81f00;
+  border-radius: 0.4rem;
+}
+
+.inboxText {
+  font-size: 1.4rem;
+  color: #a81f00;
+}
+
+.todayText,
+.completeText {
+  font-size: 1.4rem;
+  color: #202020;
+}
+
+.myProjects {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0.4rem;
+  cursor: pointer;
+}
+
+.navContent,
+.myProjects {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.myProjectsTitle {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.myProjectsIcons {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.myProjectsIcons i {
+  font-size: 1.4rem;
+  color: #8f8f8f;
+}
+
+.projectDropDownIcon {
+  transition: transform 0.3s ease;
+}
+
+.projectView {
+  padding: 0 0.4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.projectItem {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.projectItem:hover{
+  background-color: #c1c1c1 ;
+  padding: 0 .4rem;
+  border-radius: .2rem;
+  cursor: pointer;
+}
+
+.listIcon{
+  color: #198754;
+  font-size: 1.4rem;
+} 
+
+.projectDelete{
+  color: #dc4c3e;
+  font-size: 1.4rem;
+}
+.projectText {
+
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+}
+
+.dialog,
+.taskDialog {
+  /* background-color: #f0eef1; */
+  background-color: #ffff;
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.dialog {
+  width: 40rem;
+}
+
+.taskDialog {
+  width: 60rem;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.dialogForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.dialogForm h3 {
+  margin: 0;
+  font-size: 2.2rem;
+}
+
+.formContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  border-top: 0.2rem solid #f0eef1;
+  border-bottom: 0.2rem solid #f0eef1;
+  padding: 2rem 0;
+}
+
+.inputDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.inputDiv label {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.inputDiv input {
+  padding: 0.8rem 0.2rem;
+  border-radius: 0.5rem;
+  color: #f0eef1;
+  outline: none;
+  border: 0.2rem solid #f0eef1;
+  font-size: 1.2rem;
+}
+
+.inputDiv input:focus {
+  outline: 2px solid #198754;
+  color: #202020;
+}
+
+.formButtons {
+  padding: 2rem 0 0 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.formButtons button,
+.taskBtns button {
+  padding: 0.5rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 0.4rem;
+  border: none;
+  transition: transfrom 0.1s;
+}
+
+.submitBtn {
+  background-color: #dc4c3e;
+  color: #fff;
+}
+
+.submitBtn:hover {
+  background-color: #a81f00;
+}
+
+.cancelBtn:hover {
+  background-color: #c1c1c1;
+}
+
+.taskContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem;
+}
+
+.taskTitle {
+  /* border-radius: 6px; */
+  /* padding: 1rem; */
+  font-size: 2rem;
+  outline: none;
+  min-height: 2.5rem;
+  margin: 0;
+}
+
+.taskTitle:empty:before,
+.taskDescription:empty::before {
+  content: attr(data-placeholder);
+  color: #919090;
+}
+
+.taskDescription {
+  /* padding: .6rem; */
+  font-size: 1.6rem;
+  outline: none;
+  min-height: 2rem;
+  margin: 0;
+}
+
+.iconBtns {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  border-bottom: 0.2rem solid #f0eef1;
+  padding-bottom: 2rem;
+}
+
+.iconBtn {
+  background: none;
+  border: 0.2rem solid #f0eef1;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  padding: 0.6rem 1.5rem;
+  border-radius: 0.6rem;
+  transition: background 0.2s, transfrom 0.1s;
+}
+
+.iconBtn i {
+  font-size: 1.6rem;
+  color: #dc4c3e;
+}
+.iconBtn:hover {
+  background-color: #f0f0f0;
+}
+.iconBtn:active,
+.submitBtn:active,
+.cancelBtn:active {
+  transform: scale(0.95);
+}
+
+.selection {
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.taskBtns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.projectDropdown {
+  padding: 0.5rem 1.4rem;
+  font-size: 1.2rem;
+  border: 0.2rem solid #f0eef1;
+  border-radius: 0.4rem;
+  outline: none;
+}  
+
+.hidden {
+  display: none;
 }
 
 
+.calendarModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 99999; 
+}
+
+#calendarInput {
+  background: #fff;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  border: none;
+}
+
+.flatpickr-input-hidden {
+    position: absolute; /* Will be set by JS dynamically */
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    pointer-events: none;
+    top: 0; /* Default, will be overridden by JS */
+    left: 0; /* Default, will be overridden by JS */
+    z-index: -1; /* Place it behind other content in the dialog */
+} 
+
+.flatpickr-calendar {
+    
+    width: 310px; 
+    font-size: 1.2rem; 
+} 
+
+.taskDialog {
+    width: 60rem; 
+    position: relative; 
+    overflow: visible;
+}  
+
+#flatpickrAnchor {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+}
+
+
+.flatpickr-day {
+    
+    height: 28px;
+    line-height: 28px;
+    width: 28px;
+}
+
+.priority{
+  position: absolute;
+  top:  96px;
+  left: 210px;
+  display: none;
+  background-color: #fff;
+  border-radius: 4px;
+  z-index: 99999;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  
+}
+
+.priority-close-btn{
+  position: absolute; 
+    top: 5px;          
+    right: 5px;          
+    font-size: 1.4rem;  
+    color: #dc4c3e;        
+    cursor: pointer;    
+    z-index: 1;      
+}
+
+.priority ul {
+  margin: 0;
+  padding: 1.8rem 1rem 1rem 1rem;
+}
+
+.priority ul li {
+  list-style: none;
+  font-size: 1.4rem;
+  padding: .2rem .4rem;
+  border-radius: .2rem;
+  cursor: pointer;
+
+}
+
+.priority ul li:hover{
+  background-color: #c1c1c1;
+}
+
+.priority1{
+  color: #d1453b;
+} 
+
+.priority2{
+  color: #eb8909;
+}
+
+.priority3{
+  color:#246fe0;
+}
+.priority4{
+  color: #666;
+}
+
+    /* view */
+
+.projectTitle {
+  font-size: 2.5rem;
+  padding: 10px 10px 10px 10px;
+  margin: 0;
+}
+
+.taskList{
+  padding-left: 10px;
+  margin: 0;
+  
+}
+
+
+.taskList li{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 0;
+  border-bottom: solid 2px #c1c1c1;
+} 
+
+.taskDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+} 
+
+.taskButton{
+  display: flex;
+  gap: 10px;
+}
+
+.editButton{
+  background-color: #007bff;
+}
+.deleteButton{
+  background-color: #dc3545;
+}
+
+.editButton, .deleteButton {
+  font-size: 25px;
+  padding: 2px 30px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.editButton:active, .deleteButton:active{
+  transform: scale(1.05);
+}
+
+.taskTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.taskList li input {
+  margin: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.taskDescription{
+  font-size: 16px;
+  font-weight: 500;
+}
+.taskDate{
+  font-size: 14px;
+  font-weight: 400;
+}
